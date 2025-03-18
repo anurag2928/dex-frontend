@@ -1,5 +1,6 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Search } from "lucide-react";
+import { useState } from "react"; // ✅ Import useState properly
 
 const Navigation = ({ setshowSelectToken }: { setshowSelectToken: any }) => {
   return (
@@ -81,7 +82,7 @@ const Navigation = ({ setshowSelectToken }: { setshowSelectToken: any }) => {
                         style={{ display: "flex", alignItems: "center" }}
                         type="button"
                       >
-                        <img src={chain.iconUrl} />
+                        <img src={chain.iconUrl} alt="Chain Icon" />
                       </button>
 
                       <button onClick={openAccountModal} type="button">
@@ -100,6 +101,3 @@ const Navigation = ({ setshowSelectToken }: { setshowSelectToken: any }) => {
 };
 
 export default Navigation;
-function useState(arg0: boolean): [any, any] {
-  throw new Error("Function not implemented.");
-}

@@ -83,7 +83,7 @@ export default function QuoteView({
   const {
     data: hash,
     isPending,
-    error,
+   // error,
     sendTransaction,
   } = useSendTransaction();
 

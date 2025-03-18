@@ -1,5 +1,6 @@
 import { Address } from "viem";
 
+
 export const MAGIC_CALLDATA_STRING = "f".repeat(130); // used when signing the eip712 message
 
 export const AFFILIATE_FEE = 100; // 1% affiliate fee. Denoted in Bps.

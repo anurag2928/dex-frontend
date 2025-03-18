@@ -1,6 +1,6 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Search } from "lucide-react";
-import { useState } from "react"; // ✅ Import useState properly
+// import { useState } from "react"; // ✅ Import useState properly
 
 const Navigation = ({ setshowSelectToken }: { setshowSelectToken: any }) => {
   return (

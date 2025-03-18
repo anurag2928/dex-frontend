@@ -51,18 +51,11 @@ export default function SwapBox({
   const [buyToken, setBuyToken] = useState("usdc");
   const [sellAmount, setSellAmount] = useState("");
   const [buyAmount, setBuyAmount] = useState("");
-  const [tradeDirection, setTradeDirection] = useState("sell");
-  const [error, setError] = useState([]);
+  const [tradeDirection, _setTradeDirection] = useState("sell"); // Added underscore to indicate intentional non-use
+  const [validationErrors, setValidationErrors] = useState([]); // Renamed error to validationErrors
   const [inSufficientBalance, setinSufficientBalance] = useState(true);
   const [loadingPrice, setLoadingprice] = useState(false);
-  const [buyTokenTax, setBuyTokenTax] = useState({
-    buyTaxBps: "0",
-    sellTaxBps: "0",
-  });
-  const [sellTokenTax, setSellTokenTax] = useState({
-    buyTaxBps: "0",
-    sellTaxBps: "0",
-  });
+  // Removed buyTokenTax and sellTokenTax since they're not used
 
   const tokensByChain = (chainId: number) => {
     if (chainId === 1) {
@@ -76,6 +69,7 @@ export default function SwapBox({
 
   const sellTokenDecimals = sellTokenObject.decimals;
   const buyTokenDecimals = buyTokenObject.decimals;
+  // Using sellTokenAddress where needed in the component
   const sellTokenAddress = sellTokenObject.address;
 
   const parsedSellAmount =
@@ -105,18 +99,15 @@ export default function SwapBox({
     const data: any = await getPrice(`${qs.stringify(params)}`);
     setPrice(data);
     if (data?.validationErrors?.length > 0) {
-      setError(data.validationErrors);
+      setValidationErrors(data.validationErrors);
     } else {
-      setError([]);
+      setValidationErrors([]);
     }
     console.log("data", data);
     if (data.buyAmount) {
       setBuyAmount(formatUnits(data.buyAmount, buyTokenDecimals));
     }
-    if (data?.tokenMetadata) {
-      setBuyTokenTax(data.tokenMetadata.buyToken);
-      setSellTokenTax(data.tokenMetadata.sellToken);
-    }
+    // Removed unused token tax setters
     setLoadingprice(false);
   }
 
@@ -226,7 +217,7 @@ export default function SwapBox({
             }}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-2xl py-4 mt-4 font-semibold"
           >
-            {"Enteer a value"}
+            {"Enter a value"}
           </button>
         );
       }
@@ -307,10 +298,9 @@ export default function SwapBox({
     } = useWriteContract();
 
     // useWaitForTransactionReceipt to wait for the approval transaction to complete
-    const { data: approvalReceiptData, isLoading: isApproving } =
-      useWaitForTransactionReceipt({
-        hash: writeContractResult,
-      });
+    const { isLoading: isApproving } = useWaitForTransactionReceipt({
+      hash: writeContractResult,
+    });
 
     // Call `refetch` when the transaction succeeds
     useEffect(() => {

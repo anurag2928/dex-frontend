@@ -52,10 +52,9 @@ export default function SwapBox({
   const [sellAmount, setSellAmount] = useState("");
   const [buyAmount, setBuyAmount] = useState("");
   const [tradeDirection, _setTradeDirection] = useState("sell"); // Added underscore to indicate intentional non-use
-  const [validationErrors, setValidationErrors] = useState([]); // Renamed error to validationErrors
+  // Removed the validationErrors state since it's not being used anywhere
   const [inSufficientBalance, setinSufficientBalance] = useState(true);
   const [loadingPrice, setLoadingprice] = useState(false);
-  // Removed buyTokenTax and sellTokenTax since they're not used
 
   const tokensByChain = (chainId: number) => {
     if (chainId === 1) {
@@ -69,8 +68,7 @@ export default function SwapBox({
 
   const sellTokenDecimals = sellTokenObject.decimals;
   const buyTokenDecimals = buyTokenObject.decimals;
-  // Using sellTokenAddress where needed in the component
-  const sellTokenAddress = sellTokenObject.address;
+  // Removed sellTokenAddress declaration since it's not used in this component
 
   const parsedSellAmount =
     sellAmount && tradeDirection === "sell"
@@ -98,16 +96,11 @@ export default function SwapBox({
     setLoadingprice(true);
     const data: any = await getPrice(`${qs.stringify(params)}`);
     setPrice(data);
-    if (data?.validationErrors?.length > 0) {
-      setValidationErrors(data.validationErrors);
-    } else {
-      setValidationErrors([]);
-    }
+    // Removed validationErrors handling
     console.log("data", data);
     if (data.buyAmount) {
       setBuyAmount(formatUnits(data.buyAmount, buyTokenDecimals));
     }
-    // Removed unused token tax setters
     setLoadingprice(false);
   }
 
